@@ -53,39 +53,48 @@ export default function DocumentTable() {
     setLoading(documentId);
     
     try {
-      // In a real implementation, this would call your API route
-      // that creates a Stripe Checkout session
-      console.log(`Processing purchase for document: ${documentId}`);
+      // Find the document details
+      const document = documents.find(doc => doc.id === documentId);
       
-      // Example API call (commented out as placeholder)
-      /*
-      const response = await fetch('/api/create-checkout-session', {
+      if (!document) {
+        throw new Error('Document not found');
+      }
+      
+      // Call our API route to create a Stripe checkout session
+      const response = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          documentId,
+          documentId: document.id,
+          documentName: document.name,
+          price: document.price
         }),
       });
 
-      const { sessionId } = await response.json();
+      const data = await response.json();
       
-      // Redirect to Stripe Checkout
-      const stripe = await stripePromise;
-      const { error } = await stripe!.redirectToCheckout({
-        sessionId,
-      });
-      
-      if (error) {
-        console.error('Stripe checkout error:', error);
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session');
       }
-      */
       
-      // For demo purposes, we'll just show a success message
-      alert('This is a placeholder. In production, you would be redirected to Stripe checkout.');
+      // For demo purposes, we'll simulate a successful purchase
+      // In production, this would redirect to Stripe's checkout page
+      if (data.checkoutUrl) {
+        // Simulate redirect to success page
+        const successResponse = await fetch(data.checkoutUrl);
+        const successData = await successResponse.json();
+        
+        if (successResponse.ok && successData.success) {
+          alert(`Purchase successful! You can now download ${document.name}.`);
+        } else {
+          throw new Error('Payment processing failed');
+        }
+      }
     } catch (error) {
       console.error('Error processing purchase:', error);
+      alert(error instanceof Error ? error.message : 'An error occurred during checkout');
     } finally {
       setLoading(null);
     }

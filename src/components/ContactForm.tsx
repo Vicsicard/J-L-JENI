@@ -30,17 +30,25 @@ export default function ContactForm() {
     setSubmitStatus(null);
     
     try {
-      // In a real implementation, this would call your API route
-      // that processes the form submission
-      console.log('Form submission:', formData);
+      // Call our API route to process the form submission
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const data = await response.json();
       
-      // For demo purposes, we'll just show a success message
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+      
+      // Show success message
       setSubmitStatus({
         success: true,
-        message: 'Thank you for your message! We will get back to you shortly.'
+        message: data.message || 'Thank you for your message! We will get back to you shortly.'
       });
       
       // Reset form
@@ -54,7 +62,7 @@ export default function ContactForm() {
       console.error('Error submitting form:', error);
       setSubmitStatus({
         success: false,
-        message: 'There was an error submitting your message. Please try again later.'
+        message: error instanceof Error ? error.message : 'There was an error submitting your message. Please try again later.'
       });
     } finally {
       setIsSubmitting(false);
