@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #1E293B;
+  --secondary-color: #F5F5F4;
+  --accent-color: #F59E0B;
+}
+
+body {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-montserrat);
+  font-weight: 700;
+}
+
+p, span, div, li, a {
+  font-family: var(--font-inter);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent text-white font-bold py-2 px-6 rounded-md hover:bg-amber-600 transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-primary text-primary font-bold py-2 px-6 rounded-md hover:bg-primary hover:text-white transition-colors;
+  }
+
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+}
