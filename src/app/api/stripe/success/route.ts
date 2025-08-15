@@ -1,14 +1,20 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    // Get the URL parameters
-    const url = new URL(request.url);
-    const documentId = url.searchParams.get('documentId');
+    // In a real implementation, you would:
+    // 1. Get the session ID from the URL query params
+    // 2. Verify the payment with Stripe
+    // 3. Update your database to mark the document as purchased
+    // 4. Return the document details
+    
+    // For this placeholder, we'll simulate a successful purchase
+    const { searchParams } = request.nextUrl;
+    const documentId = searchParams.get('documentId');
     
     if (!documentId) {
       return NextResponse.json(
-        { error: 'Missing document ID' },
+        { error: 'Document ID is required' },
         { status: 400 }
       );
     }

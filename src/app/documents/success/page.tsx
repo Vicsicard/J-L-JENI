@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
@@ -11,7 +11,7 @@ interface DocumentData {
   expiryDate: string;
 }
 
-export default function DocumentPurchaseSuccess() {
+function DocumentPurchaseSuccessContent() {
   const searchParams = useSearchParams();
   const documentId = searchParams.get('documentId');
   
@@ -45,6 +45,7 @@ export default function DocumentPurchaseSuccess() {
     
     fetchPurchaseDetails();
   }, [documentId]);
+  
   
   if (loading) {
     return (
@@ -121,5 +122,20 @@ export default function DocumentPurchaseSuccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function DocumentPurchaseSuccess() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent mx-auto"></div>
+          <p className="mt-4 text-lg">Loading purchase details...</p>
+        </div>
+      </div>
+    }>
+      <DocumentPurchaseSuccessContent />
+    </Suspense>
   );
 }
