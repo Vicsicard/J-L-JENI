@@ -5,19 +5,13 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[600px]">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero-bg.jpg"
-            alt="HOA community"
-            fill
-            priority
-            style={{ objectFit: 'cover' }}
-            className="brightness-[0.85]"
-          />
-        </div>
+      <section className="relative h-[600px] bg-gradient-to-br from-primary via-blue-700 to-accent overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-white opacity-10"></div>
+        <div className="absolute bottom-10 left-10 w-40 h-40 rounded-full bg-white opacity-10"></div>
+        <div className="absolute top-40 left-1/4 w-20 h-20 rounded-full bg-white opacity-10"></div>
         <div className="relative container-custom h-full flex flex-col justify-center">
-          <div className="max-w-2xl text-white bg-black bg-opacity-50 p-6 rounded-lg">
+          <div className="max-w-2xl text-white p-6 rounded-lg backdrop-blur-sm bg-white bg-opacity-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
               Welcome to J&L Management
             </h1>
