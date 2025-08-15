@@ -17,11 +17,11 @@ export default function Home() {
           />
         </div>
         <div className="relative container-custom h-full flex flex-col justify-center">
-          <div className="max-w-2xl text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          <div className="max-w-2xl text-white bg-black bg-opacity-50 p-6 rounded-lg">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
               Welcome to J&L Management
             </h1>
-            <p className="text-xl md:text-2xl mb-8">
+            <p className="text-xl md:text-2xl mb-8 text-white">
               Personalized HOA Management You Can Count On
             </p>
             <Link href="/services" className="btn-primary">
