@@ -1,35 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
+
+// Initialize Stripe with the secret key from environment variables
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16', // Use the latest API version or specify the one you want
+});
 
 export async function GET(request: NextRequest) {
   try {
-    // In a real implementation, you would:
-    // 1. Get the session ID from the URL query params
-    // 2. Verify the payment with Stripe
-    // 3. Update your database to mark the document as purchased
-    // 4. Return the document details
-    
-    // For this placeholder, we'll simulate a successful purchase
     const { searchParams } = request.nextUrl;
-    const documentId = searchParams.get('documentId');
+    const sessionId = searchParams.get('session_id');
+    const documentId = searchParams.get('document_id');
     
-    if (!documentId) {
+    if (!sessionId || !documentId) {
       return NextResponse.json(
-        { error: 'Document ID is required' },
+        { error: 'Session ID and Document ID are required' },
         { status: 400 }
       );
     }
     
-    // In a real implementation, you would:
-    // 1. Verify the payment with Stripe
-    // 2. Update your database to record the purchase
-    // 3. Generate a download link or provide access to the document
+    // Verify the payment with Stripe
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
     
-    // For now, we'll simulate a successful purchase
+    // Check if the payment was successful
+    if (session.payment_status !== 'paid') {
+      return NextResponse.json(
+        { error: 'Payment has not been completed' },
+        { status: 400 }
+      );
+    }
+    
+    // Verify that the document ID in the session matches the one in the URL
+    if (session.metadata?.documentId !== documentId) {
+      return NextResponse.json(
+        { error: 'Document ID mismatch' },
+        { status: 400 }
+      );
+    }
+    
+    // In a real implementation, you would update your database to record the purchase
+    // For now, we'll return the document details
     const documentData = {
       id: documentId,
       downloadUrl: `/documents/${documentId}.pdf`, // This would be a real URL in production
       purchaseDate: new Date().toISOString(),
       expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
+      paymentId: session.payment_intent as string,
     };
     
     return NextResponse.json({

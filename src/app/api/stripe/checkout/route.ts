@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
-// This is a placeholder implementation for Stripe checkout
-// In a production environment, you would use the actual Stripe SDK
+// Initialize Stripe with the secret key from environment variables
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16', // Use the latest API version or specify the one you want
+});
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -14,23 +18,35 @@ export async function POST(request: Request) {
       );
     }
     
-    // In a real implementation, you would create a Stripe checkout session
-    // using the Stripe SDK and the provided API keys
-    
-    // For now, we'll simulate a successful checkout session creation
-    const checkoutSession = {
-      id: `cs_test_${Math.random().toString(36).substring(2, 15)}`,
-      url: `/api/stripe/success?documentId=${body.documentId}`,
-      amount: body.price * 100, // Stripe uses cents
-      currency: 'usd',
-      documentName: body.documentName,
-      documentId: body.documentId
-    };
+    // Create a Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: body.documentName,
+              description: `Document ID: ${body.documentId}`,
+            },
+            unit_amount: Math.round(body.price * 100), // Stripe uses cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/documents/success?session_id={CHECKOUT_SESSION_ID}&document_id=${body.documentId}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/documents`,
+      metadata: {
+        documentId: body.documentId,
+        documentName: body.documentName,
+      },
+    });
     
     return NextResponse.json({ 
       success: true,
-      sessionId: checkoutSession.id,
-      checkoutUrl: checkoutSession.url
+      sessionId: session.id,
+      checkoutUrl: session.url
     });
     
   } catch (error) {
