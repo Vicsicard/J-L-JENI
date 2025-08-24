@@ -5,13 +5,21 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[600px] bg-gradient-to-br from-primary via-blue-700 to-accent overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 right-20 w-64 h-64 rounded-full bg-white opacity-10"></div>
-        <div className="absolute bottom-10 left-10 w-40 h-40 rounded-full bg-white opacity-10"></div>
-        <div className="absolute top-40 left-1/4 w-20 h-20 rounded-full bg-white opacity-10"></div>
+      <section className="relative h-[600px] overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/ChatGPT Image Aug 24, 2025, 03_13_31 PM.png"
+            alt="J&L Management Hero Background"
+            fill
+            style={{ objectFit: 'cover' }}
+            priority
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        </div>
         <div className="relative container-custom h-full flex flex-col justify-center">
-          <div className="max-w-2xl text-white p-6 rounded-lg backdrop-blur-sm bg-white bg-opacity-10">
+          <div className="max-w-2xl text-white p-6 rounded-lg backdrop-blur-sm bg-white bg-opacity-25">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
               Welcome to J&L Management
             </h1>
