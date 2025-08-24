@@ -84,7 +84,7 @@ function DocumentPurchaseSuccessContent() {
         </div>
         <h1 className="text-3xl font-bold text-center text-green-800 mb-4">Purchase Successful!</h1>
         <p className="text-center text-green-700 text-lg mb-6">
-          Thank you for your purchase. Your document is ready for download.
+          Thank you for your purchase. We have been notified and will email your document to you within 24 hours.
         </p>
       </div>
       
@@ -107,15 +107,15 @@ function DocumentPurchaseSuccessContent() {
         </div>
         
         <div className="mt-8">
-          <a 
-            href={documentData.downloadUrl}
-            className="block w-full bg-accent text-white text-center font-bold py-3 px-6 rounded-md hover:bg-amber-600 transition-colors"
-          >
-            Download Document
-          </a>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <p className="text-blue-800 text-center">
+              <strong>What happens next?</strong><br/>
+              We will email your document directly to the email address used for payment within 24 hours. Please check your spam folder if you don't see it.
+            </p>
+          </div>
           
-          <div className="mt-4 text-center">
-            <Link href="/documents" className="text-accent hover:text-amber-600 font-medium">
+          <div className="text-center">
+            <Link href="/documents" className="bg-accent text-white font-bold py-3 px-8 rounded-md hover:bg-amber-600 transition-colors">
               Return to Documents
             </Link>
           </div>

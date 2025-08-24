@@ -15,82 +15,59 @@ interface Document {
 
 const documents: Document[] = [
   {
-    id: 'doc_welcome',
-    name: 'HOA Welcome Packet',
-    description: 'Comprehensive information for new residents',
-    price: 10
+    id: 'price_1RzkfSGEHfPiJwM4CdF2g19H',
+    name: 'Resale Disclosure Package',
+    description: 'Complete disclosure package for property resale (delivered by email)',
+    price: 395
   },
   {
-    id: 'doc_arch_req',
-    name: 'Architectural Request Form',
-    description: 'Required for renovations and property modifications',
-    price: 5
+    id: 'price_1RzkfWGEHfPiJwM4NE7NLx4I',
+    name: 'Condo Questionnaire',
+    description: 'Required questionnaire for condo transactions (delivered by email)',
+    price: 165
   },
   {
-    id: 'doc_bylaws',
-    name: 'HOA Bylaws Template',
-    description: 'Standard bylaws template for HOA communities',
-    price: 15
+    id: 'price_1RzkfZGEHfPiJwM4Nqyd2rHf',
+    name: 'Key Fob',
+    description: 'Access key fob ($10 shipping per order, not per fob)',
+    price: 45
   },
   {
-    id: 'doc_meeting',
-    name: 'Meeting Minutes Template',
-    description: 'Professional template for recording HOA meetings',
-    price: 5
-  },
-  {
-    id: 'doc_budget',
-    name: 'Annual Budget Template',
-    description: 'Comprehensive HOA budget planning template',
-    price: 12
+    id: 'price_1RzkfdGEHfPiJwM40kvNH3rO',
+    name: 'Additional Key (unit or common area)',
+    description: 'Extra key for unit or common area access ($10 shipping per order, not per key)',
+    price: 35
   }
 ];
 
 export default function DocumentTable() {
   const [loading, setLoading] = useState<string | null>(null);
 
-  const handleBuyClick = async (documentId: string) => {
-    setLoading(documentId);
+  const handleBuyClick = async (priceId: string) => {
+    setLoading(priceId);
     
     try {
       // Find the document details
-      const document = documents.find(doc => doc.id === documentId);
+      const document = documents.find(doc => doc.id === priceId);
       
       if (!document) {
         throw new Error('Document not found');
       }
       
-      // Call our API route to create a Stripe checkout session
-      const response = await fetch('/api/stripe/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          documentId: document.id,
-          documentName: document.name,
-          price: document.price
-        }),
-      });
-
-      const data = await response.json();
+      // Redirect directly to the appropriate Stripe payment link
+      const paymentLinks: { [key: string]: string } = {
+        'price_1RzkfSGEHfPiJwM4CdF2g19H': 'https://buy.stripe.com/5kQ5kDfCA80h2e83Omcwg0F',
+        'price_1RzkfWGEHfPiJwM4NE7NLx4I': 'https://buy.stripe.com/fZudR94XW80hcSM84Ccwg0G',
+        'price_1RzkfZGEHfPiJwM4Nqyd2rHf': 'https://buy.stripe.com/aFacN5aig3K1cSMdoWcwg0H',
+        'price_1RzkfdGEHfPiJwM40kvNH3rO': 'https://buy.stripe.com/7sY9ATbmk0xP5qk3Omcwg0I'
+      };
       
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create checkout session');
-      }
-      
-      // For demo purposes, we'll simulate a successful purchase
-      // In production, this would redirect to Stripe's checkout page
-      if (data.checkoutUrl) {
-        // Simulate redirect to success page
-        const successResponse = await fetch(data.checkoutUrl);
-        const successData = await successResponse.json();
-        
-        if (successResponse.ok && successData.success) {
-          alert(`Purchase successful! You can now download ${document.name}.`);
-        } else {
-          throw new Error('Payment processing failed');
-        }
+      const paymentUrl = paymentLinks[priceId];
+      if (paymentUrl) {
+        // Redirect to Stripe payment page
+        window.open(paymentUrl, '_blank');
+      } else {
+        throw new Error('Payment link not found');
       }
     } catch (error) {
       console.error('Error processing purchase:', error);
@@ -123,7 +100,7 @@ export default function DocumentTable() {
                   disabled={loading === doc.id}
                   className="bg-accent text-white px-4 py-2 rounded hover:bg-amber-600 transition-colors disabled:bg-gray-400"
                 >
-                  {loading === doc.id ? 'Processing...' : 'Buy & Download'}
+                  {loading === doc.id ? 'Processing...' : 'Buy'}
                 </button>
               </td>
             </tr>

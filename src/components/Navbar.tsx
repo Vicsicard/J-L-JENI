@@ -17,9 +17,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             {/* Logo from provided URL */}
-            <div className="relative h-10 w-40 mr-2">
+            <div className="relative h-32 w-[512px] mr-2">
               <Image 
-                src="https://imagestopost.carrd.co/assets/images/image24.jpg?v=20ef2a31" 
+                src="/j-l-logo-2-cropped.png" 
                 alt="J&L Management Logo"
                 fill
                 style={{ objectFit: 'contain' }}

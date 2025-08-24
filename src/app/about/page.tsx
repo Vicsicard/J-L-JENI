@@ -66,10 +66,11 @@ export default function About() {
               <div className="sticky top-24">
                 <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg mb-8">
                   <Image
-                    src="/images/about-image.jpg"
-                    alt="J&L Management team"
+                    src="/j-l-logo-2-cropped.png"
+                    alt="J&L Management"
                     fill
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: 'contain' }}
+                    className="bg-white p-4"
                   />
                 </div>
                 

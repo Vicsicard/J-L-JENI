@@ -15,7 +15,7 @@ export default function Documents() {
         <div className="container-custom">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Documents</h1>
           <p className="text-xl max-w-3xl">
-            Purchase and download the documents you need for your community
+            Purchase the documents you need for your community
           </p>
         </div>
       </section>
@@ -27,12 +27,12 @@ export default function Documents() {
             <div className="bg-secondary p-6 rounded-lg mb-10">
               <h2 className="text-2xl font-bold mb-4">Instructions</h2>
               <p className="mb-6">
-                Select the document you need below. When you click 'Buy & Download,' you'll be taken to our secure Stripe checkout. 
-                Once your payment is complete, you'll receive a link to download your document immediately.
+                Select the document you need below. When you click 'Buy,' you'll be taken to our secure Stripe checkout. 
+                Once your payment is complete, we will be notified and will email your document directly to you.
               </p>
               <div className="bg-amber-100 border-l-4 border-accent p-4 text-sm">
                 <p className="font-semibold">Note:</p>
-                <p>A download link will also be emailed to you for future reference. Links are valid for 24 hours.</p>
+                <p>Documents are delivered via email within 24 hours of payment confirmation. Please check your spam folder if you don't see the email.</p>
               </div>
             </div>
 
