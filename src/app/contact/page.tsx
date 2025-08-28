@@ -63,8 +63,8 @@ export default function Contact() {
                     <h3 className="text-lg font-semibold mb-1">Mailing Address</h3>
                     <p className="text-gray-700">
                       J&L Management<br />
-                      161 Mesa Circle<br />
-                      Lafayette, CO 80026
+                      1917 Windemere Ln<br />
+                      Erie, CO 80516
                     </p>
                   </div>
                 </div>

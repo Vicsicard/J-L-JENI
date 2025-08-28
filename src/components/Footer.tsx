@@ -15,8 +15,8 @@ const Footer = () => {
             <p className="mb-2">
               Mailing Address:<br />
               J&L Management<br />
-              161 Mesa Circle<br />
-              Lafayette, CO 80026
+              1917 Windemere Ln<br />
+              Erie, CO 80516
             </p>
           </div>
           
