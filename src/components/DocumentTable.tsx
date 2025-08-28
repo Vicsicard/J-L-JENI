@@ -15,25 +15,25 @@ interface Document {
 
 const documents: Document[] = [
   {
-    id: 'price_1S16r9GEHfPiJwM4MiSwntVg',
+    id: 'price_1S17NOD6OMqbWvwTZLVIqAwG',
     name: 'Resale Disclosure Package',
     description: 'Complete disclosure package for property resale (delivered by email)',
     price: 395
   },
   {
-    id: 'price_1S16rHGEHfPiJwM4J42TzMQ9',
+    id: 'price_1S17NPD6OMqbWvwT6R45zcpq',
     name: 'Condo Questionnaire',
     description: 'Required questionnaire for condo transactions (delivered by email)',
     price: 165
   },
   {
-    id: 'price_1S16rQGEHfPiJwM4Sa0yWT2h',
+    id: 'price_1S17NPD6OMqbWvwTYLjv3eZ0',
     name: 'Key Fob',
     description: 'Access key fob ($10 shipping per order, not per fob)',
     price: 45
   },
   {
-    id: 'price_1S16sAGEHfPiJwM4ZBM8VSyF',
+    id: 'price_1S17NQD6OMqbWvwTBhkWOEPW',
     name: 'Additional Key (unit or common area)',
     description: 'Extra key for unit or common area access ($10 shipping per order, not per key)',
     price: 35
@@ -56,10 +56,10 @@ export default function DocumentTable() {
       
       // Redirect directly to the appropriate Stripe payment link
       const paymentLinks: { [key: string]: string } = {
-        'price_1S16r9GEHfPiJwM4MiSwntVg': 'https://buy.stripe.com/9B63cvgGEgwN9GA4Sqcwg0N',
-        'price_1S16rHGEHfPiJwM4J42TzMQ9': 'https://buy.stripe.com/28E7sLaigbct1a41Gecwg0O',
-        'price_1S16rQGEHfPiJwM4Sa0yWT2h': 'https://buy.stripe.com/aFafZh6200xP9GAgB8cwg0P',
-        'price_1S16sAGEHfPiJwM4ZBM8VSyF': 'https://buy.stripe.com/dRmeVdfCA6Wd7ysdoWcwg0Q'
+        'price_1S17NOD6OMqbWvwTZLVIqAwG': 'https://buy.stripe.com/test_dRmeVc4fVgzC0YYagW1gs01', // Resale Disclosure Package
+        'price_1S17NPD6OMqbWvwT6R45zcpq': 'https://buy.stripe.com/test_dRmeVc4fVgzC0YYagW1gs01', // Condo Questionnaire
+        'price_1S17NPD6OMqbWvwTYLjv3eZ0': 'https://buy.stripe.com/test_9B67sK5jZeru4ba1Kq1gs02', // Key Fob
+        'price_1S17NQD6OMqbWvwTBhkWOEPW': 'https://buy.stripe.com/test_eVq00iaEj4QUbDCgFk1gs03'  // Additional Key
       };
       
       const paymentUrl = paymentLinks[priceId];
