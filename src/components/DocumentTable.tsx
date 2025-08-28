@@ -15,25 +15,25 @@ interface Document {
 
 const documents: Document[] = [
   {
-    id: 'price_1RzkfSGEHfPiJwM4CdF2g19H',
+    id: 'price_1S16r9GEHfPiJwM4MiSwntVg',
     name: 'Resale Disclosure Package',
     description: 'Complete disclosure package for property resale (delivered by email)',
     price: 395
   },
   {
-    id: 'price_1RzkfWGEHfPiJwM4NE7NLx4I',
+    id: 'price_1S16rHGEHfPiJwM4J42TzMQ9',
     name: 'Condo Questionnaire',
     description: 'Required questionnaire for condo transactions (delivered by email)',
     price: 165
   },
   {
-    id: 'price_1RzkfZGEHfPiJwM4Nqyd2rHf',
+    id: 'price_1S16rQGEHfPiJwM4Sa0yWT2h',
     name: 'Key Fob',
     description: 'Access key fob ($10 shipping per order, not per fob)',
     price: 45
   },
   {
-    id: 'price_1RzkfdGEHfPiJwM40kvNH3rO',
+    id: 'price_1S16sAGEHfPiJwM4ZBM8VSyF',
     name: 'Additional Key (unit or common area)',
     description: 'Extra key for unit or common area access ($10 shipping per order, not per key)',
     price: 35
@@ -56,10 +56,10 @@ export default function DocumentTable() {
       
       // Redirect directly to the appropriate Stripe payment link
       const paymentLinks: { [key: string]: string } = {
-        'price_1RzkfSGEHfPiJwM4CdF2g19H': 'https://buy.stripe.com/5kQ5kDfCA80h2e83Omcwg0F',
-        'price_1RzkfWGEHfPiJwM4NE7NLx4I': 'https://buy.stripe.com/fZudR94XW80hcSM84Ccwg0G',
-        'price_1RzkfZGEHfPiJwM4Nqyd2rHf': 'https://buy.stripe.com/aFacN5aig3K1cSMdoWcwg0H',
-        'price_1RzkfdGEHfPiJwM40kvNH3rO': 'https://buy.stripe.com/7sY9ATbmk0xP5qk3Omcwg0I'
+        'price_1S16r9GEHfPiJwM4MiSwntVg': 'https://buy.stripe.com/6oU28r7645S91a4acKcwg0J',
+        'price_1S16rHGEHfPiJwM4J42TzMQ9': 'https://buy.stripe.com/eVqdR9dus4O5g4Yet0cwg0K',
+        'price_1S16rQGEHfPiJwM4Sa0yWT2h': 'https://buy.stripe.com/4gM4gzgGE94lbOI3Omcwg0L',
+        'price_1S16sAGEHfPiJwM4ZBM8VSyF': 'https://buy.stripe.com/bJe9AT3TS4O5bOI84Ccwg0M'
       };
       
       const paymentUrl = paymentLinks[priceId];
