@@ -97,7 +97,7 @@ export default function Services() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/financial-services.jpg"
+                src="/images/Financial.png"
                 alt="Financial management services"
                 fill
                 style={{ objectFit: 'cover' }}
@@ -113,7 +113,7 @@ export default function Services() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="order-2 md:order-1 relative h-[400px] rounded-lg overflow-hidden shadow-lg">
               <Image
-                src="/images/organization-services.jpg"
+                src="/images/Organized.png"
                 alt="Organization services"
                 fill
                 style={{ objectFit: 'cover' }}
