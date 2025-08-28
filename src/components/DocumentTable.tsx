@@ -56,10 +56,10 @@ export default function DocumentTable() {
       
       // Redirect directly to the appropriate Stripe payment link
       const paymentLinks: { [key: string]: string } = {
-        'price_1S16r9GEHfPiJwM4MiSwntVg': 'https://buy.stripe.com/6oU28r7645S91a4acKcwg0J',
-        'price_1S16rHGEHfPiJwM4J42TzMQ9': 'https://buy.stripe.com/eVqdR9dus4O5g4Yet0cwg0K',
-        'price_1S16rQGEHfPiJwM4Sa0yWT2h': 'https://buy.stripe.com/4gM4gzgGE94lbOI3Omcwg0L',
-        'price_1S16sAGEHfPiJwM4ZBM8VSyF': 'https://buy.stripe.com/bJe9AT3TS4O5bOI84Ccwg0M'
+        'price_1S16r9GEHfPiJwM4MiSwntVg': 'https://buy.stripe.com/9B63cvgGEgwN9GA4Sqcwg0N',
+        'price_1S16rHGEHfPiJwM4J42TzMQ9': 'https://buy.stripe.com/28E7sLaigbct1a41Gecwg0O',
+        'price_1S16rQGEHfPiJwM4Sa0yWT2h': 'https://buy.stripe.com/aFafZh6200xP9GAgB8cwg0P',
+        'price_1S16sAGEHfPiJwM4ZBM8VSyF': 'https://buy.stripe.com/dRmeVdfCA6Wd7ysdoWcwg0Q'
       };
       
       const paymentUrl = paymentLinks[priceId];
