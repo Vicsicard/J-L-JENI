@@ -127,18 +127,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-16 bg-secondary">
-        <div className="container-custom">
-          <h2 className="text-3xl font-bold mb-12 text-center">Our Location</h2>
-          <div className="h-[400px] rounded-lg overflow-hidden shadow-lg">
-            {/* In a real implementation, this would be replaced with an actual map component */}
-            <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-              <p className="text-gray-600">Map will be embedded here</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

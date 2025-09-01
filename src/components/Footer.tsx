@@ -57,51 +57,28 @@ const Footer = () => {
             </ul>
           </div>
           
-          {/* Legal & Social */}
+          {/* Social Media */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Legal & Social</h3>
-            <ul className="space-y-2 mb-6">
-              <li>
-                <Link href="/privacy-policy" className="hover:text-accent transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-of-use" className="hover:text-accent transition-colors">
-                  Terms of Use
-                </Link>
-              </li>
-              <li>
-                <Link href="/refund-policy" className="hover:text-accent transition-colors">
-                  Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookie-notice" className="hover:text-accent transition-colors">
-                  Cookie Notice
-                </Link>
-              </li>
-            </ul>
-            <div className="flex items-center">
-              <a 
-                href="https://facebook.com/JandLManagement" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-accent transition-colors"
-                aria-label="Facebook"
+            <h3 className="text-xl font-bold mb-4">Follow Us</h3>
+            <a 
+              href="https://facebook.com/JandLManagement" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-white hover:text-accent transition-colors"
+              aria-label="Follow us on Facebook"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="currentColor"
+                className="w-6 h-6 mr-2"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  width="24" 
-                  height="24" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                </svg>
-              </a>
-            </div>
+                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+              </svg>
+              Facebook
+            </a>
           </div>
         </div>
         

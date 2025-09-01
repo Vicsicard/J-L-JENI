@@ -17,13 +17,13 @@ const documents: Document[] = [
   {
     id: 'price_1S17NOD6OMqbWvwTZLVIqAwG',
     name: 'Resale Disclosure Package',
-    description: 'Complete disclosure package for property resale (delivered by email)',
+    description: 'Complete disclosure package for property resale. Documents will be delivered within 24 business hours of payment confirmation (Confirmation may take 3-5 business days)',
     price: 395
   },
   {
     id: 'price_1S17NPD6OMqbWvwT6R45zcpq',
     name: 'Condo Questionnaire',
-    description: 'Required questionnaire for condo transactions (delivered by email)',
+    description: 'Required questionnaire for condo transactions. Documents will be delivered within 24 business hours of payment confirmation (Confirmation may take 3-5 business days)',
     price: 165
   },
   {

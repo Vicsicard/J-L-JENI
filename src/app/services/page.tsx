@@ -45,7 +45,7 @@ export default function Services() {
                   </svg>
                   <div>
                     <h3 className="font-bold text-lg">Bookkeeping</h3>
-                    <p>Accurate and transparent financial record-keeping for your association.</p>
+                    <p>Accurate and transparent financial record-keeping for your association. Cloud based Accounting that can be accessed by your board of directors or Financial Committee in real time.</p>
                   </div>
                 </li>
                 <li className="flex items-start">
