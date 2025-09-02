@@ -1,150 +1,59 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
+  const [showGoogleForm, setShowGoogleForm] = useState(false);
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleContactClick = () => {
+    setShowGoogleForm(true);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-    
-    try {
-      // Call our API route to process the form submission
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Something went wrong');
-      }
-      
-      // Show success message
-      setSubmitStatus({
-        success: true,
-        message: data.message || 'Thank you for your message! We will get back to you shortly.'
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus({
-        success: false,
-        message: error instanceof Error ? error.message : 'There was an error submitting your message. Please try again later.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  if (showGoogleForm) {
+    return (
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <div className="mb-4">
+          <button 
+            onClick={() => setShowGoogleForm(false)}
+            className="text-accent hover:underline text-sm"
+          >
+            ← Back to contact info
+          </button>
+        </div>
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform?embedded=true" 
+          width="100%" 
+          height="600" 
+          frameBorder="0" 
+          marginHeight={0} 
+          marginWidth={0}
+          className="rounded-md"
+        >
+          Loading contact form...
+        </iframe>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-      {submitStatus && (
-        <div className={`p-4 mb-6 rounded-md ${submitStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-          {submitStatus.message}
-        </div>
-      )}
-      
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">
-            Phone
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-          />
-        </div>
-        
-        <div className="mb-6">
-          <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
-            Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows={5}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-          ></textarea>
-        </div>
-        
+      <div className="text-center">
+        <h3 className="text-xl font-bold mb-4">Send Us a Message</h3>
+        <p className="mb-6 text-gray-600">
+          Click below to open our contact form. Your message will be sent directly to Jeni at J&L Management.
+        </p>
         <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-accent text-white font-bold py-3 px-6 rounded-md hover:bg-amber-600 transition-colors disabled:bg-gray-400"
+          onClick={handleContactClick}
+          className="w-full bg-accent text-white font-bold py-3 px-6 rounded-md hover:bg-amber-600 transition-colors"
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          Open Contact Form
         </button>
-      </form>
+        <div className="mt-4 text-sm text-gray-500">
+          <p>Or contact us directly:</p>
+          <p>📞 612-741-0226</p>
+          <p>✉️ jeni@jandlmanagement.com</p>
+        </div>
+      </div>
     </div>
   );
 }
