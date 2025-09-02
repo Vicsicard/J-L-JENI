@@ -6,7 +6,11 @@ export default function ContactForm() {
   const [showGoogleForm, setShowGoogleForm] = useState(false);
   
   const handleContactClick = () => {
-    setShowGoogleForm(true);
+    // Option 1: Open in new tab (prevents account switching issues)
+    window.open('https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform', '_blank');
+    
+    // Option 2: Show embedded form (comment out the line above and uncomment below)
+    // setShowGoogleForm(true);
   };
 
   if (showGoogleForm) {
@@ -21,13 +25,14 @@ export default function ContactForm() {
           </button>
         </div>
         <iframe 
-          src="https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform?embedded=true" 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform?embedded=true&usp=pp_url" 
           width="100%" 
           height="600" 
           frameBorder="0" 
           marginHeight={0} 
           marginWidth={0}
           className="rounded-md"
+          sandbox="allow-forms allow-scripts allow-same-origin"
         >
           Loading contact form...
         </iframe>
