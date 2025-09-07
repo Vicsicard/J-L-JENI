@@ -1,63 +1,160 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
 export default function ContactForm() {
-  const [showGoogleForm, setShowGoogleForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
   
-  const handleContactClick = () => {
-    // Option 1: Open in new tab (prevents account switching issues)
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform', '_blank');
-    
-    // Option 2: Show embedded form (comment out the line above and uncomment below)
-    // setShowGoogleForm(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  if (showGoogleForm) {
-    return (
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <div className="mb-4">
-          <button 
-            onClick={() => setShowGoogleForm(false)}
-            className="text-accent hover:underline text-sm"
-          >
-            ← Back to contact info
-          </button>
-        </div>
-        <iframe 
-          src="https://docs.google.com/forms/d/e/1FAIpQLSfZRIDTgCODQXIl0TMNoNROt3uOTb1zTLUbZ5eS7NlJ7LHujg/viewform?embedded=true&usp=pp_url" 
-          width="100%" 
-          height="600" 
-          frameBorder="0" 
-          marginHeight={0} 
-          marginWidth={0}
-          className="rounded-md"
-          sandbox="allow-forms allow-scripts allow-same-origin"
-        >
-          Loading contact form...
-        </iframe>
-      </div>
-    );
-  }
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    
+    try {
+      // Submit form data directly to our API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit the form');
+      }
+      
+      // Show success message
+      setSubmitStatus({
+        success: true,
+        message: 'Thank you! Your message has been sent to J&L Management. We will respond shortly.'
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+      
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({
+        success: false,
+        message: 'There was an error sending your message. Please try again or contact us directly at 612-741-0226.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-      <div className="text-center">
-        <h3 className="text-xl font-bold mb-4">Send Us a Message</h3>
-        <p className="mb-6 text-gray-600">
-          Click below to open our contact form. Your message will be sent directly to Jeni at J&L Management.
-        </p>
-        <button
-          onClick={handleContactClick}
-          className="w-full bg-accent text-white font-bold py-3 px-6 rounded-md hover:bg-amber-600 transition-colors"
-        >
-          Open Contact Form
-        </button>
-        <div className="mt-4 text-sm text-gray-500">
-          <p>Or contact us directly:</p>
-          <p>📞 612-741-0226</p>
-          <p>✉️ jeni@jandlmanagement.com</p>
+      {submitStatus && (
+        <div className={`mb-4 p-4 rounded-md ${
+          submitStatus.success 
+            ? 'bg-green-50 text-green-800 border border-green-200' 
+            : 'bg-red-50 text-red-800 border border-red-200'
+        }`}>
+          {submitStatus.message}
         </div>
+      )}
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            Name *
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            Email *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+            Message *
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            rows={4}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-accent text-white font-bold py-3 px-6 rounded-md hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Sending...' : 'Send Message'}
+        </button>
+      </form>
+
+      <div className="mt-4 text-sm text-gray-500 text-center">
+        <p>Or contact us directly:</p>
+        <p>📞 612-741-0226</p>
+        <p>✉️ jeni@jandlmanagement.com</p>
       </div>
     </div>
   );

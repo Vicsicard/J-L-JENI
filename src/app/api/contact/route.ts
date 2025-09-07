@@ -1,15 +1,55 @@
 import { NextResponse } from 'next/server';
+import sgMail from '@sendgrid/mail';
 
-// This is a placeholder for email sending functionality
-// In a production environment, you would use a service like SendGrid, Mailgun, etc.
-async function sendEmail(data: any) {
-  // This would be replaced with actual email sending logic
-  console.log('Sending email with data:', data);
-  
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  return { success: true };
+// Function to handle form submissions using SendGrid
+async function handleFormSubmission(data: any) {
+  try {
+    // Set SendGrid API key from environment variable
+    const apiKey = process.env.SENDGRID_API_KEY;
+    if (!apiKey) {
+      console.error('SendGrid API key not found');
+      return { success: false, error: 'Email service configuration error' };
+    }
+    
+    sgMail.setApiKey(apiKey);
+    
+    // Create email message
+    const msg = {
+      to: 'jeni@jandlmanagement.com', // Client's email address
+      from: process.env.SENDGRID_VERIFIED_SENDER || 'noreply@jandlmanagement.com', // Must be verified in SendGrid
+      subject: 'New Contact Form Submission - J&L Management Website',
+      text: `
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone}
+
+Message:
+${data.message}
+
+Submitted on: ${new Date().toLocaleString()}
+`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Phone:</strong> ${data.phone}</p>
+        <h3>Message:</h3>
+        <p>${data.message.replace(/\n/g, '<br>')}</p>
+        <p><em>Submitted on: ${new Date().toLocaleString()}</em></p>
+      `,
+    };
+    
+    // Send email
+    await sgMail.send(msg);
+    
+    // Log success (without personal details)
+    console.log('Contact form submission processed successfully at:', new Date().toISOString());
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return { success: false, error };
+  }
 }
 
 export async function POST(request: Request) {
@@ -35,14 +75,15 @@ export async function POST(request: Request) {
     }
     
     // Process the contact form submission
-    // In a real implementation, you would send an email or store in a database
-    const result = await sendEmail({
+    const result = await handleFormSubmission({
       name: body.name,
       email: body.email,
       phone: body.phone || 'Not provided',
-      message: body.message,
-      date: new Date().toISOString(),
+      message: body.message
     });
+    
+    // Only log that a submission was received without personal details
+    console.log('Contact form submission received at:', new Date().toISOString());
     
     // Return success response
     return NextResponse.json({ 
